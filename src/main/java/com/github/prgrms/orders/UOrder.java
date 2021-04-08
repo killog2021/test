@@ -9,12 +9,12 @@ import java.util.Objects;
 
 public class UOrder {
     private final Long seq;
-    private final Long userSeq;
-    private final Long productSeq;
-    private final Long reviewSeq;
-    private final State state;
-    private final LocalDateTime rejectedAt;
-    private final LocalDateTime createAt;
+    private Long userSeq;
+    private Long productSeq;
+    private Long reviewSeq;
+    private State state;
+    private LocalDateTime rejectedAt;
+    private LocalDateTime createAt;
     private String requestMsg;
     private String rejectMsg;
 
@@ -78,6 +78,13 @@ public class UOrder {
                 .toString();
     }
 
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
 
     static public class Builder {
         private Long seq;

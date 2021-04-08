@@ -10,5 +10,7 @@ public interface OrderRepository {
 
     public Optional<UOrder> findById(Long orderId);
 
+    public int updateState(Long orderId, String state);
+
     public List<UOrder> findAll();
 }

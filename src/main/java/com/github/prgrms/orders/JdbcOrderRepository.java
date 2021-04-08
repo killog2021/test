@@ -32,6 +32,10 @@ public class JdbcOrderRepository implements OrderRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Override
+    public int updateState(Long seq, String state) {
+        return jdbcTemplate.update("UPDATE orders SET state=? WHERE seq=? ", new Object[]{state, seq});
+    }
 
     @Override
     public Optional<UOrder> findById(Long id) {

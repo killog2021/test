@@ -2,15 +2,11 @@ package com.github.prgrms.orders;
 
 import com.github.prgrms.errors.NotFoundException;
 import com.github.prgrms.utils.ApiUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import static com.github.prgrms.utils.ApiUtils.success;
-import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("api/orders")
@@ -25,16 +21,19 @@ public class OrderRestController {
 
 
     @GetMapping(path = "{id}")
-    public ApiUtils.ApiResult<OrderDto> findById(@PathVariable Long id) {
-        return success(orderService.findById(id).map(OrderDto::new)
-                .orElseThrow(() -> new NotFoundException("Could not found order for " + id)));
+    public ApiUtils.ApiResult<UOrder> findById(@PathVariable Long id) {
+        return success(orderService.findById(id).orElseThrow(() -> new NotFoundException("Could not found order for " + id)));
     }
 
 
     @GetMapping
-    public ApiUtils.ApiResult<List<OrderDto>> findAll() {
-        return success(orderService.findAll().stream()
-                .map(OrderDto::new)
-                .collect(toList()));
+    public ApiUtils.ApiResult<List<UOrder>> findAll() {
+        return success(orderService.findAll());
+    }
+
+    @PatchMapping(path = "{id}/accept")
+    public ApiUtils.ApiResult<Boolean> accept(@PathVariable Long id) {
+
+        return success(orderService.accept(id));
     }
 }
