@@ -29,12 +29,12 @@ public class ProductRestController {
       .orElseThrow(() -> new NotFoundException("Could not found product for " + id)));
   }
 
-  // FIXME `요건 1` 정의에 맞게 응답 타입 수정이 필요합니다.
+
   @GetMapping
-  public List<ProductDto> findAll() {
-    return productService.findAll().stream()
+  public ApiResult<List<ProductDto>> findAll() {
+    return success(productService.findAll().stream()
       .map(ProductDto::new)
-      .collect(toList());
+      .collect(toList()));
   }
 
 }
