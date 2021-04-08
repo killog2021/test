@@ -1,33 +1,28 @@
-package com.github.prgrms.reviews;
-
-import com.github.prgrms.errors.NotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+package com.github.prgrms.orders;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 import static java.time.LocalDateTime.now;
-import static com.google.common.base.Preconditions.checkNotNull;
+
 
 @Service
 public class ReviewService {
 
 
-  private final ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
 
-  public ReviewService(ReviewRepository reviewRepository) {
-    this.reviewRepository = reviewRepository;
-  }
+    public ReviewService(ReviewRepository reviewRepository) {
+        this.reviewRepository = reviewRepository;
+    }
 
-  @Transactional
-  public ReviewDto addReview(Long userSeq, Long productSeq, ReviewRequest reviewRequest) {
+    @Transactional
+    public Review addReview(Long userSeq, Long productSeq, String dontent) {
 
-    
-    reviewRepository.save(userSeq, productSeq, reviewRequest.getContent(),now());
-    return review;
-  }
+        Review review = new Review.Builder().userSeq(userSeq).createAt(now()).content(dontent).productSeq(productSeq).build();
+        reviewRepository.save(review);
+        return review;
+    }
 
-  
+
 }

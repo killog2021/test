@@ -1,10 +1,12 @@
-package com.github.prgrms.products;
+package com.github.prgrms.orders;
+
+import com.github.prgrms.orders.Review;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ReviewRepository {
 
-    int save(Reivew review);
+    void save(Review review);
 
 }

@@ -26,8 +26,9 @@ public class Review {
 
   private final LocalDateTime createAt;
 
-  public Review(Long productSeq,String content) {
-    this(null,null, productSeq,content,null);
+
+ public Review(String content) {
+    this(null,null, null,content,null);
   }
 
   public Review(Long seq,  Long userSeq  , Long productSeq, String content, LocalDateTime createAt) {
