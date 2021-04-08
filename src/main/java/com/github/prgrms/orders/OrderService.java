@@ -4,6 +4,7 @@ import com.github.prgrms.errors.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,17 +32,36 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    @Transactional
     public boolean accept(Long orderId) {
 
         checkNotNull(orderId, "orderId must be provided");
         UOrder order = orderRepository.findById(orderId).orElseThrow(() -> new NotFoundException("Could not found order for " + orderId));
-        if (order.getState() == State.REQUESTED) {
-
-            orderRepository.updateState(orderId, State.ACCEPTED.name());
+        if (order.getState().equals(State.REQUESTED.getValue())) {
+            order.setState(State.ACCEPTED.name());
+            orderRepository.update(order);
             return true;
+        } else {
+            return false;
+
         }
-        return false;
 
 
+    }
+
+    public boolean reject(Long orderId) {
+
+        checkNotNull(orderId, "orderId must be provided");
+        UOrder order = orderRepository.findById(orderId).orElseThrow(() -> new NotFoundException("Could not found order for " + orderId));
+        if (order.getState().equals(State.REQUESTED.getValue())) {
+            order.setState(State.REJECTED.name());
+            order.setRejectAt(LocalDateTime.now());
+
+            orderRepository.update(order);
+            return true;
+        } else {
+            return false;
+
+        }
     }
 }

@@ -8,17 +8,19 @@ import java.util.Objects;
 
 
 public class UOrder {
+
     private final Long seq;
     private Long userSeq;
     private Long productSeq;
     private Long reviewSeq;
-    private State state;
+    private String state;
     private LocalDateTime rejectedAt;
+    private LocalDateTime completedAt;
     private LocalDateTime createAt;
     private String requestMsg;
     private String rejectMsg;
 
-    public UOrder(Long seq, Long userSeq, Long productSeq, Long reviewSeq, State state, String requestMsg, String rejectMsg, LocalDateTime rejectedAt, LocalDateTime createAt) {
+    public UOrder(Long seq, Long userSeq, Long productSeq, Long reviewSeq, String state, String requestMsg, String rejectMsg, LocalDateTime rejectedAt, LocalDateTime completedAt, LocalDateTime createAt) {
         this.seq = seq;
         this.userSeq = userSeq;
         this.productSeq = productSeq;
@@ -27,6 +29,7 @@ public class UOrder {
         this.requestMsg = requestMsg;
         this.rejectMsg = rejectMsg;
         this.rejectedAt = rejectedAt;
+        this.completedAt = completedAt;
         this.createAt = createAt;
     }
 
@@ -34,8 +37,16 @@ public class UOrder {
         return seq;
     }
 
+    public String getRejectMsg() {
+        return rejectMsg;
+    }
+
     public Long getReviewSeq() {
         return reviewSeq;
+    }
+
+    public void setReviewSeq(Long reviewSeq) {
+        this.reviewSeq = reviewSeq;
     }
 
     public Long getUserSeq() {
@@ -48,6 +59,10 @@ public class UOrder {
 
     public String getRequestMsg() {
         return requestMsg;
+    }
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
     }
 
     public LocalDateTime getCreateAt() {
@@ -73,31 +88,46 @@ public class UOrder {
                 .append("seq", seq)
                 .append("userSeq", userSeq)
                 .append("productSeq", productSeq)
-                .append("content", requestMsg)
+                .append("reviewSeq", reviewSeq)
+                .append("state", state)
+                .append("requestMsg", requestMsg)
+                .append("rejectMsg", rejectMsg)
+                .append("completedAt", completedAt)
+                .append("rejectedAt", rejectedAt)
                 .append("createAt", createAt)
                 .toString();
     }
 
-    public State getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(State state) {
+    public void setState(String state) {
         this.state = state;
     }
 
+    public LocalDateTime getRejectedAt() {
+        return rejectedAt;
+    }
+
+    public void setRejectAt(LocalDateTime localDateTime) {
+        rejectedAt = localDateTime;
+    }
+
     static public class Builder {
+
         private Long seq;
         private Long userSeq;
         private Long productSeq;
         private Long reviewSeq;
-        private State state;
+        private String state;
 
         private String requestMsg;
         private String rejectMsg;
 
         private LocalDateTime rejectedAt;
         private LocalDateTime createAt;
+        private LocalDateTime completedAt;
 
         public Builder() {/*empty*/}
 
@@ -110,6 +140,7 @@ public class UOrder {
             this.requestMsg = UOrder.requestMsg;
             this.rejectMsg = UOrder.rejectMsg;
             this.rejectedAt = UOrder.rejectedAt;
+            this.completedAt = UOrder.completedAt;
             this.createAt = UOrder.createAt;
         }
 
@@ -155,13 +186,20 @@ public class UOrder {
             return this;
         }
 
-        public Builder state(State state) {
+        public Builder completedAt(LocalDateTime completedAt) {
+            this.completedAt = completedAt;
+            return this;
+        }
+
+        public Builder state(String state) {
             this.state = state;
             return this;
         }
 
         public UOrder build() {
-            return new UOrder(seq, userSeq, productSeq, reviewSeq, state, requestMsg, rejectMsg, rejectedAt, createAt
+
+            //Long seq, Long userSeq, Long productSeq, Long reviewSeq, String state, String requestMsg, String rejectMsg, LocalDateTime rejectedAt, LocalDateTime completedAt, LocalDateTime createAt
+            return new UOrder(seq, userSeq, productSeq, reviewSeq, state, requestMsg, rejectMsg, rejectedAt, completedAt, createAt
             );
         }
 

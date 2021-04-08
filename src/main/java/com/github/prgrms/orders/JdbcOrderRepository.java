@@ -20,7 +20,7 @@ public class JdbcOrderRepository implements OrderRepository {
                     .userSeq(rs.getLong("user_seq"))
                     .productSeq(rs.getLong("product_seq"))
                     .reviewSeq(rs.getLong("review_seq"))
-                    .state(State.valueOf(rs.getString("state")))
+                    .state(rs.getString("state"))
                     .requestMsg(rs.getString("request_msg"))
                     .rejectMsg(rs.getString("reject_msg"))
                     .rejectedAt(dateTimeOf(rs.getTimestamp("rejected_at")))
@@ -32,9 +32,15 @@ public class JdbcOrderRepository implements OrderRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
     @Override
-    public int updateState(Long seq, String state) {
-        return jdbcTemplate.update("UPDATE orders SET state=? WHERE seq=? ", new Object[]{state, seq});
+    public void update(UOrder uOrder) {
+        if (uOrder.getReviewSeq() == 0) {
+            uOrder.setReviewSeq(null);
+        }
+        jdbcTemplate.update("UPDATE orders SET review_seq=?,state=?,request_msg=?,reject_msg=?,completed_at=?,rejected_at=? WHERE seq=? ",
+                uOrder.getReviewSeq(), uOrder.getState(), uOrder.getRequestMsg(), uOrder.getRejectMsg(), uOrder.getCompletedAt(), uOrder.getRejectedAt(), uOrder.getSeq());
+
     }
 
     @Override

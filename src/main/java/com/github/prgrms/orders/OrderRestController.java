@@ -36,4 +36,11 @@ public class OrderRestController {
 
         return success(orderService.accept(id));
     }
+
+
+    @PatchMapping(path = "{id}/reject")
+    public ApiUtils.ApiResult<Boolean> reject(@PathVariable Long id) {
+
+        return success(orderService.reject(id));
+    }
 }

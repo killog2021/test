@@ -9,9 +9,14 @@ public enum State {
     REJECTED("REJECTED");
 
 
-    String status;
+    String value;
 
-    private State(String completed) {
+    State(String value) {
+        this.value = value;
+    }
+
+    String getValue() {
+        return value;
     }
 
 }
