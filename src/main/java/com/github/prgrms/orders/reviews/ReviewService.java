@@ -1,9 +1,7 @@
-package com.github.prgrms.orders;
+package com.github.prgrms.orders.reviews;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import static java.time.LocalDateTime.now;
 
 
 @Service
@@ -19,7 +17,7 @@ public class ReviewService {
     @Transactional
     public Review addReview(Long userSeq, Long productSeq, String dontent) {
 
-        Review review = new Review.Builder().userSeq(userSeq).createAt(now()).content(dontent).productSeq(productSeq).build();
+        Review review = new Review.Builder().userSeq(userSeq).content(dontent).productSeq(productSeq).build();
         reviewRepository.save(review);
         return review;
     }

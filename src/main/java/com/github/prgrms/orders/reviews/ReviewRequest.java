@@ -1,4 +1,4 @@
-package com.github.prgrms.orders;
+package com.github.prgrms.orders.reviews;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

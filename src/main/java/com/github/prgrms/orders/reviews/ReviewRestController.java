@@ -1,4 +1,4 @@
-package com.github.prgrms.orders;
+package com.github.prgrms.orders.reviews;
 
 import com.github.prgrms.errors.NotFoundException;
 import com.github.prgrms.products.ProductService;
@@ -27,19 +27,20 @@ public class ReviewRestController {
     }
 
 
-    @PostMapping(path = "{productId}/review")
+    @PostMapping(path = "{orderId}/review")
     public ApiResult<Review> review(
-            @AuthenticationPrincipal JwtAuthentication authentication, @RequestBody ReviewRequest review, @PathVariable Long productId
+            @AuthenticationPrincipal JwtAuthentication authentication, @RequestBody ReviewRequest review, @PathVariable Long orderId
     ) {
 
         userService.findById(authentication.id)
                 .map(UserDto::new)
                 .orElseThrow(() -> new NotFoundException("Could nof found user for " + authentication.id));
 
-        /*productService.findById(productId)
-        .map(ProductDto::new)
-        .orElseThrow(() -> new NotFoundException("Could nof found product for " + productId));   
-      */
-        return success(reviewService.addReview(authentication.id, productId, review.getContent()));
+        //FIXME: orderService findById 필요
+        //       Long productSeq= .findById(orderId)
+        //        .map(ProductDto::new)
+        //        .orElseThrow(() -> new NotFoundException("Could nof found product for " + orderId));
+        //
+        return success(reviewService.addReview(authentication.id, orderId, review.getContent()));
     }
 }
