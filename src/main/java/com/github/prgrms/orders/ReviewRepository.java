@@ -5,6 +5,6 @@ import java.util.Optional;
 
 public interface ReviewRepository {
 
-    int create(Reivew review);
+    int save(Reivew review);
 
 }

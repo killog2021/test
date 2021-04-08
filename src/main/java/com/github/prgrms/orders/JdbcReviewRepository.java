@@ -20,7 +20,7 @@ public class JdbcReivewRepository implements ReivewRepository {
   }
 
   @Override
-  public Integer create(Reivew review) {
+  public Integer save(Reivew review) {
     Integer seq= jdbcTemplate.update(
       "INSERT INTO reviews( user_seq, product_seq, content, create_at)  VALUES(?,?,?,?) ",
     review.getUserSeq(),review.getProductSeq(),review.getContent(),review.getCreateAt());
