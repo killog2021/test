@@ -43,4 +43,16 @@ public class OrderRestController {
 
         return success(orderService.reject(id));
     }
+
+    @PatchMapping(path = "{id}/shipping")
+    public ApiUtils.ApiResult<Boolean> shipping(@PathVariable Long id) {
+
+        return success(orderService.shipping(id));
+    }
+
+    @PatchMapping(path = "{id}/complete")
+    public ApiUtils.ApiResult<Boolean> complete(@PathVariable Long id) {
+
+        return success(orderService.complete(id));
+    }
 }

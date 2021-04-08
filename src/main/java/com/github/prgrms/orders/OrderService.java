@@ -38,7 +38,7 @@ public class OrderService {
         checkNotNull(orderId, "orderId must be provided");
         UOrder order = orderRepository.findById(orderId).orElseThrow(() -> new NotFoundException("Could not found order for " + orderId));
         if (order.getState().equals(State.REQUESTED.getValue())) {
-            order.setState(State.ACCEPTED.name());
+            order.setState(State.ACCEPTED.getValue());
             orderRepository.update(order);
             return true;
         } else {
@@ -54,7 +54,7 @@ public class OrderService {
         checkNotNull(orderId, "orderId must be provided");
         UOrder order = orderRepository.findById(orderId).orElseThrow(() -> new NotFoundException("Could not found order for " + orderId));
         if (order.getState().equals(State.REQUESTED.getValue())) {
-            order.setState(State.REJECTED.name());
+            order.setState(State.REJECTED.getValue());
             order.setRejectAt(LocalDateTime.now());
 
             orderRepository.update(order);
@@ -64,4 +64,35 @@ public class OrderService {
 
         }
     }
+
+    public Boolean shipping(Long orderId) {
+
+        checkNotNull(orderId, "orderId must be provided");
+        UOrder order = orderRepository.findById(orderId).orElseThrow(() -> new NotFoundException("Could not found order for " + orderId));
+        if (order.getState().equals(State.ACCEPTED.getValue())) {
+            order.setState(State.SHIPPING.getValue());
+
+            orderRepository.update(order);
+            return true;
+        } else {
+            return false;
+
+        }
+    }
+
+    public Boolean complete(Long orderId) {
+
+        checkNotNull(orderId, "orderId must be provided");
+        UOrder order = orderRepository.findById(orderId).orElseThrow(() -> new NotFoundException("Could not found order for " + orderId));
+        if (order.getState().equals(State.SHIPPING.getValue())) {
+            order.setState(State.COMPLETED.getValue());
+
+            orderRepository.update(order);
+            return true;
+        } else {
+            return false;
+
+        }
+    }
+
 }
